@@ -17,11 +17,53 @@ export default class Ball {
 
     // generated random number between -5 and 5
     // makes sure number does not equal 0
+    this.vx = 0;
+
     this.vy = 0;
     while (this.vy === 0) {
       this.vy = Math.floor(Math.random() * 10 - 5);
     }
     this.vx = this.direction * (6 - Math.abs(this.vy));
+  }
+
+  paddleCollision(player1, player2) {
+    // if vx is greater than 0, detect paddle 2
+    // else detect paddle1
+    if (this.vx > 0) {
+      let paddle = player2.coordinates(
+        player2.x,
+        player2.y,
+        player2.width,
+        player2.height
+      );
+
+      let [leftX, rightX, topY, bottomY] = paddle;
+      if (
+        this.x + this.radius >= leftX &&
+        this.x + this.radius <= rightX &&
+        this.y >= topY &&
+        this.y <= bottomY
+      )
+        this.vx = -this.vx;
+    } else {
+      // Player #1
+      let paddle = player1.coordinates(
+        player1.x,
+        player1.y,
+        player1.width,
+        player1.height
+      );
+
+      let [leftX, rightX, topY, bottomY] = paddle;
+
+      if (
+        this.x - this.radius <= rightX &&
+        this.x - this.radius >= leftX &&
+        this.y >= topY &&
+        this.y <= bottomY
+      )
+        this.vx = -this.vx;
+    }
   }
 
   wallCollision() {
@@ -42,11 +84,13 @@ export default class Ball {
     // reverse vy direction
   }
 
-  render(svg) {
+  render(svg, player1, player2) {
     this.x += this.vx;
     this.y += this.vy;
 
     this.wallCollision();
+
+    this.paddleCollision(player1, player2);
 
     let circle = document.createElementNS(SVG_NS, "circle");
     circle.setAttributeNS(null, "r", this.radius);

@@ -2,6 +2,7 @@ import { SVG_NS, KEYS } from "../settings.js";
 import Board from "./Board.js";
 import Paddle from "./Paddle.js";
 import Ball from "./Ball.js";
+import Score from "./Score.js";
 
 export default class Game {
   constructor(element, width, height) {
@@ -16,6 +17,9 @@ export default class Game {
     this.paddWidth = 8;
     this.paddHeight = 56;
     this.boardGap = 10;
+    this.radius = 8;
+
+    this.ball = new Ball(this.radius, this.width, this.height);
 
     this.player1 = new Paddle(
       this.height,
@@ -37,12 +41,22 @@ export default class Game {
       KEYS.down
     );
 
-    this.radius = 8;
-    this.ball = new Ball(this.radius, this.width, this.height);
+    document.addEventListener("keydown", evetn => {
+      switch (event.key) {
+        case KEYS.spaceBar:
+          this.pause = !this.pause;
+          break;
+      }
+    });
   }
 
   render() {
     // More code goes here....
+    if (this.pause) {
+      this.player1.speed = 10;
+      this.player2.speed = 10;
+      return;
+    }
 
     this.gameElement.innerHTML = "";
 
@@ -55,6 +69,7 @@ export default class Game {
 
     this.player1.render(svg);
     this.player2.render(svg);
-    this.ball.render(svg);
+
+    this.ball.render(svg, this.player1, this.player2);
   }
 }
