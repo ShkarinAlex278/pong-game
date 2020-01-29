@@ -1,4 +1,4 @@
-import { SVG_NS } from "../settings.js";
+import { SVG_NS, KEYS } from "../settings.js";
 import Board from "./Board.js";
 import Paddle from "./Paddle.js";
 import Ball from "./Ball.js";
@@ -13,6 +13,32 @@ export default class Game {
     this.gameElement = document.getElementById(this.element);
 
     this.board = new Board(this.width, this.height);
+    this.paddWidth = 8;
+    this.paddHeight = 56;
+    this.boardGap = 10;
+
+    this.player1 = new Paddle(
+      this.height,
+      this.paddWidth,
+      this.paddHeight,
+      this.boardGap,
+      (this.height - this.paddHeight) / 2,
+      KEYS.a,
+      KEYS.z
+    );
+
+    this.player2 = new Paddle(
+      this.height,
+      this.paddWidth,
+      this.paddHeight,
+      this.width - this.paddWidth - this.boardGap,
+      (this.height - this.paddHeight) / 2,
+      KEYS.up,
+      KEYS.down
+    );
+
+    this.radius = 8;
+    this.ball = new Ball(this.radius, this.width, this.height);
   }
 
   render() {
@@ -26,30 +52,6 @@ export default class Game {
     this.gameElement.appendChild(svg);
 
     this.board.render(svg);
-
-    this.paddWidth = 8;
-    this.paddHeight = 56;
-    this.boardGap = 10;
-
-    this.player1 = new Paddle(
-      this.width,
-      this.paddWidth,
-      this.paddHeight,
-      this.boardGap,
-      (this.height - this.paddHeight) / 2
-    );
-
-    this.player2 = new Paddle(
-      this.width,
-      this.paddWidth,
-      this.paddHeight,
-      this.width - this.paddWidth - this.boardGap,
-      (this.height - this.paddHeight) / 2
-    );
-
-    this.radius = 8;
-
-    this.ball = new Ball(this.radius, this.width / 2, this.height / 2);
 
     this.player1.render(svg);
     this.player2.render(svg);
