@@ -4,9 +4,9 @@ A project for a pong game using SVGs. The goal of my project was to create a pon
 
 # Technologies used for the projects:
 
-.HTML - Learn more: (https://en.wikipedia.org/wiki/HTML5);
-.CSS - Learn more: (https://en.wikipedia.org/wiki/Cascading_Style_Sheets);
-.Javascript - Learn more: (https://en.wikipedia.org/wiki/JavaScript);
++ HTML - Learn more: (https://en.wikipedia.org/wiki/HTML5);
++ CSS - Learn more: (https://en.wikipedia.org/wiki/Cascading_Style_Sheets);
++ Javascript - Learn more: (https://en.wikipedia.org/wiki/JavaScript);
 
 # Personal learnings:
 The Pong game project was interested for me because it self coveres varieties of tasks such as: 
